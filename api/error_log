@@ -1,0 +1,8 @@
+[30-Jul-2025 22:26:25 UTC] PHP Warning:  Undefined variable $rosterData in /home/wwdesi/public_html/stockercup/api/api_proxy.php on line 58
+[30-Jul-2025 22:26:25 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/wwdesi/public_html/stockercup/api/api_proxy.php on line 58
+[30-Jul-2025 22:26:25 UTC] PHP Warning:  Undefined variable $tournamentData in /home/wwdesi/public_html/stockercup/api/api_proxy.php on line 70
+[30-Jul-2025 22:26:25 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/wwdesi/public_html/stockercup/api/api_proxy.php on line 70
+[30-Jul-2025 22:26:25 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/wwdesi/public_html/stockercup/api/api_proxy.php on line 70
+[30-Jul-2025 22:26:25 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/wwdesi/public_html/stockercup/api/api_proxy.php on line 70
+[30-Jul-2025 22:26:25 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/wwdesi/public_html/stockercup/api/api_proxy.php on line 70
+[30-Jul-2025 22:26:25 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/wwdesi/public_html/stockercup/api/api_proxy.php on line 70

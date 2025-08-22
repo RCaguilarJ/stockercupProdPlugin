@@ -1,0 +1,460 @@
+/* Replacing entire CSS with original comprehensive styling */
+/* ===== RESET & BASE ===== */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Montserrat, Sans-serif;
+  background: #f8f9fa;
+  min-width: 280px;
+  color: #222;
+}
+main {
+  margin: 0;
+  padding: 0;
+  min-width: 280px;
+}
+
+/* ===== CUSTOM SELECT (MOBILE) ===== */
+.custom-select-box {
+  width: 100%;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e1e1e1;
+  position: relative;
+  box-sizing: border-box;
+  font-size: 1em;
+  cursor: pointer;
+}
+.custom-select-selected {
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #fff;
+  color: #222;
+  font-weight: 500;
+  border-bottom: 1px solid #e1e1e1;
+}
+.custom-select-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 2px 8px rgba(36, 59, 85, 0.08);
+  z-index: 10;
+  max-height: 180px;
+  overflow-y: auto;
+}
+.custom-select-option {
+  padding: 12px 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid #e1e1e1;
+  color: #222;
+  background: #fff;
+  cursor: pointer;
+  border: 1px solid #e1e1e1;
+}
+.custom-select-option:last-child {
+  border-bottom: none;
+}
+.custom-select-option:hover {
+  background: #f0f4f8;
+}
+
+/* ===== ROUND SELECTOR ===== */
+.round-selector-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  padding: 18px 24px 0 24px;
+  background: #f8f9fa;
+}
+.round-label {
+  font-weight: 600;
+  color: #222;
+  font-size: 1.08em;
+}
+.round-select {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #e1e1e1;
+  font-size: 1em;
+  background: #fff;
+  color: #222;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.round-select:focus {
+  border-color: #27ae60;
+}
+
+/* Botón con gradiente Obsidian Glow */
+.view-results-btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1.08em;
+  font-weight: bold;
+  background: linear-gradient(90deg, #243b55 0%, #141e30 100%);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(36, 59, 85, 0.15);
+  transition: transform 0.1s, box-shadow 0.2s;
+  letter-spacing: 1px;
+}
+.view-results-btn:hover,
+.view-results-btn:focus {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(36, 59, 85, 0.18);
+  background: linear-gradient(90deg, #141e30 0%, #243b55 100%);
+}
+
+/* ===== LEADERBOARD CONTAINER ===== */
+.golf-leaderboard-container,
+.leaderboard-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: #f8f9fa;
+  padding: 0;
+  width: 100%;
+  min-width:100%;
+  height: 100%;
+  overflow-y: auto;
+}
+.golf-leaderboard-list,
+.leaderboard-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  padding: 0px;
+  margin: 0px;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+.golf-leaderboard-card,
+.leaderboard-card {
+  background-color: white;
+  padding: 8px 10px;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  position: relative;
+  min-height: 60px;
+  flex-shrink: 0;
+}
+.golf-leaderboard-card:hover,
+.leaderboard-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+.card-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(8px, 2vw, 32px);
+  background: #fff;
+  border-radius: 12px;
+  padding: clamp(8px, 2vw, 24px) clamp(12px, 4vw, 48px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  width: 100%;
+}
+.leaderboard-img,
+.name {
+  text-align: left;
+}
+.name {
+  flex: 1;
+}
+.position-box {
+  order: 1;
+  font-weight: bold;
+  font-size: clamp(1em, 2vw, 1.15em);
+  text-align: center;
+  margin: 0;
+  min-width: clamp(36px, 7vw, 70px);
+  color: #666;
+}
+.leaderboard-img,
+.avatar-initials {
+  order: 2;
+  width: clamp(28px, 6vw, 48px);
+  height: clamp(28px, 6vw, 48px);
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 clamp(4px, 2vw, 16px);
+}
+.name {
+  order: 3;
+  font-weight: 600;
+  font-size: clamp(0.95em, 2vw, 1.12em);
+  margin-bottom: 0;
+  text-transform: uppercase;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: clamp(60px, 15vw, 120px);
+  max-width: clamp(100px, 25vw, 220px);
+  display: block;
+}
+.score,
+.score.negative,
+.score.positive,
+.score.even {
+  order: 4;
+  font-weight: bold;
+  font-size: clamp(1em, 2vw, 1.12em);
+  text-align: center;
+  min-width: clamp(40px, 8vw, 80px);
+  color: #e74c3c;
+  display: block;
+}
+.score.positive {
+  color: #27ae60;
+}
+.score.even {
+  color: #333;
+}
+.thru,
+.thru-text {
+  order: 5;
+  color: #888;
+  font-size: clamp(0.95em, 2vw, 1.08em);
+  text-align: center;
+  min-width: clamp(40px, 10vw, 100px);
+  display: block;
+}
+
+/* ===== RESPONSIVE ===== */
+/* Reorganización de Media Queries para un enfoque Mobile-First */
+
+@media (max-width: 600px) {
+  /* **Cambio importante:** Se ajusta el padding del contenedor padre
+        para controlar el espacio en los bordes. */
+  .round-selector-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px 8px 0 8px; /* Controla el padding desde aquí */
+  }
+
+  /* **Cambio importante:** El select y custom-select-box simplemente
+        se ajustan al 100% de su contenedor. */
+  .custom-select-box {
+    width: 100%;
+    margin: 0;
+  }
+  .round-select {
+    width: 100%;
+    margin: 0;
+    padding: 12px 8px;
+    box-sizing: border-box;
+  }
+
+  .view-results-btn {
+    width: 80vw;
+    max-width: 320px;
+    padding: 12px;
+    font-size: 1em;
+    margin: auto;
+    display: block;
+    text-align: center;
+    align-items: center;
+  }
+}
+
+@media (max-width: 450px) {
+  .card-content {
+    display: grid !important;
+    grid-template-areas:
+      "pos img name name name"
+      "pos img score thru .";
+    column-gap: 8px;
+    row-gap: 4px;
+    justify-items: start;
+    align-items: center;
+    padding: 8px 8px;
+  }
+  .position-box {
+    grid-area: pos;
+  }
+  .leaderboard-img,
+  .avatar-initials {
+    grid-area: img;
+    width: 80px;
+    height: 80px;
+    margin: 0 4px;
+  }
+  .name {
+    grid-area: name;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0;
+    font-size: 0.95em;
+  }
+  .score,
+  .score.negative,
+  .score.positive,
+  .score.even {
+    grid-area: score;
+    justify-self: start !important;
+    min-width: 0 !important;
+    margin: 0;
+    font-size: 0.95em;
+  }
+  .thru,
+  .thru-text {
+    grid-area: thru;
+    justify-self: start !important;
+    text-align: left !important;
+    white-space: nowrap;
+    min-width: 0 !important;
+    margin: 0;
+    font-size: 0.95em;
+  }
+}
+@media (min-width: 451px) and (max-width: 600px) {
+  /* Este bloque ya no es necesario, el bloque para max-width: 450px cubre este rango */
+  /* y los estilos para 600px ya están definidos arriba. */
+}
+@media (min-width: 601px) and (max-width: 900px) {
+  .card-content {
+    gap: 14px;
+    padding: 12px 20px;
+    width: 100%;
+  }
+  .position-box {
+    min-width: 50px;
+    font-size: 1.08em;
+  }
+  .leaderboard-img,
+  .avatar-initials {
+    width: 60px;
+    height: 60px;
+    margin: 0 8px;
+  }
+  .name {
+    min-width: 90px;
+    max-width: 120px;
+    font-size: 1.05em;
+    margin: 0 8px;
+  }
+  .score,
+  .score.negative,
+  .score.positive,
+  .score.even {
+    min-width: 50px;
+    max-width: 70px;
+    font-size: 1.05em;
+    margin: 0 8px;
+  }
+  .thru,
+  .thru-text {
+    min-width: 60px;
+    max-width: 90px;
+    font-size: 1.05em;
+    margin: 0 8px;
+  }
+}
+@media (min-width: 901px) {
+  .card-content {
+    gap: 18px;
+    padding: 14px 28px;
+    width: 100%;
+  }
+  .position-box {
+    min-width: 70px;
+    font-size: 1.1em;
+  }
+  .leaderboard-img,
+  .avatar-initials {
+    width: 80px;
+    height: 80px;
+    margin: 0 10px;
+  }
+  .name {
+    min-width: 110px;
+    max-width: 140px;
+    font-size: 1.08em;
+    margin: 0 10px;
+  }
+  .score,
+  .score.negative,
+  .score.positive,
+  .score.even {
+    min-width: 60px;
+    max-width: 80px;
+    font-size: 1.08em;
+    margin: 0 10px;
+  }
+  .thru,
+  .thru-text {
+    min-width: 80px;
+    max-width: 100px;
+    font-size: 1.08em;
+    margin: 0 10px;
+  }
+}
+
+/* ===== LOADER ===== */
+.golf-loader,
+#loader {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  margin-top: -32px;
+  margin-left: -32px;
+  border: 6px solid #ccc;
+  border-top-color: #2c3e50;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 1000;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== SNACKBAR ===== */
+#snackbar {
+  visibility: hidden;
+  min-width: 280px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 6px;
+  position: fixed;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.5s ease, bottom 0.5s ease;
+  font-size: 14px;
+}
+#snackbar.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 50px;
+}

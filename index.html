@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leaderboard Golf</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+
+  <main class="leaderboard-container">
+    <div class="round-selector-container">
+      <label for="round-select" class="round-label">Select round:</label>
+      <select id="round-select" class="round-select"></select>
+      <button id="view-results-btn" class="view-results-btn">View Results</button>
+    </div>
+    <div id="loader"></div>
+    <div id="snackbar">Leaderboard actualizado</div>
+    <div id="leaderboard-list" class="leaderboard-list"></div>
+  </main>
+  <script src="script/script.js"></script>
+</body>
+</html>
