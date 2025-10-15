@@ -6,10 +6,47 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Montserrat, Sans-serif;
+  /* Prefer the self-hosted font (GSC-Roboto), then Roboto/system fallbacks */
+  font-family: 'GSC-Roboto', Roboto, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   background: #f8f9fa;
   min-width: 280px;
   color: #222;
+}
+
+/* ===== FORZAR ANCHO COMPLETO - ANULAR ELEMENTOR/TEMAS ===== */
+/* Anular cualquier padding/margin de contenedores Elementor padre */
+.elementor-widget-container .golf-leaderboard-container,
+.elementor-element .golf-leaderboard-container,
+.elementor-column .golf-leaderboard-container,
+.elementor-widget-shortcode .golf-leaderboard-container {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Anular padding de widget shortcode de Elementor */
+.elementor-widget-shortcode {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.elementor-widget-shortcode .elementor-widget-container {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+/* Anular padding de columnas Elementor */
+.elementor-column-wrap,
+.elementor-column > .elementor-widget-wrap {
+  padding: 0 !important;
+}
+
+/* Forzar contenedor a ocupar todo el ancho disponible */
+.golf-leaderboard-container,
+.golf-leaderboard-container * {
+  box-sizing: border-box !important;
 }
 main {
   margin: 0;
@@ -101,7 +138,6 @@ main {
 .view-results-btn {
   padding: 10px 24px;
   border-radius: 8px;
-  border: none;
   font-size: 1.08em;
   font-weight: bold;
   background: linear-gradient(90deg, #243b55 0%, #141e30 100%);
@@ -118,60 +154,132 @@ main {
   background: linear-gradient(90deg, #141e30 0%, #243b55 100%);
 }
 
-/* ===== LEADERBOARD CONTAINER ===== */
+/* ===== ANULAR TODOS LOS PADDINGS/MARGINS DE ELEMENTOR Y TEMAS ===== */
+/* Máxima prioridad - Forzar ancho completo sin espacios */
+div[class*="elementor"] .golf-leaderboard-container,
+section[class*="elementor"] .golf-leaderboard-container,
+.elementor .golf-leaderboard-container {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Anular padding del widget container de Elementor */
+.elementor-widget-container > .golf-leaderboard-container {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Si el shortcode está dentro de un div wrapper */
+.elementor-shortcode > .golf-leaderboard-container,
+div > .golf-leaderboard-container {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+/* ===== LEADERBOARD CONTAINER =====  user */
 .golf-leaderboard-container,
 .leaderboard-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  background-color: #f8f9fa;
-  padding: 0;
-  width: 100%;
-  min-width: 280px;
-  height: 100vh;
-  overflow-y: auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #f8f9fa;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    overflow-y: auto;
+    display: flex;
+    max-width: 100% !important;
+    max-height: 100vh;
+    /* Make this a container for container queries so layout adapts to the column width */
+    container-type: inline-size;
+    container-name: leaderboard;
+    overflow-x: hidden;
+    box-sizing: border-box !important;
+    /* Compensar padding de columna Elementor padre si existe */
+    position: relative;
+    left: 0;
+    right: 0;
+}
+
+/* Variante para compensar padding común de Elementor (10px, 15px, 20px) */
+.elementor-column-gap-default > .elementor-widget-wrap > .elementor-element .golf-leaderboard-container,
+.elementor-column-gap-narrow > .elementor-widget-wrap > .elementor-element .golf-leaderboard-container {
+  margin-left: -10px !important;
+  margin-right: -10px !important;
+  width: calc(100% + 20px) !important;
+  max-width: calc(100% + 20px) !important;
+}
+
+.elementor-column-gap-extended > .elementor-widget-wrap > .elementor-element .golf-leaderboard-container,
+.elementor-column-gap-wide > .elementor-widget-wrap > .elementor-element .golf-leaderboard-container {
+  margin-left: -20px !important;
+  margin-right: -20px !important;
+  width: calc(100% + 40px) !important;
+  max-width: calc(100% + 40px) !important;
+}
+
+.elementor-column-gap-wider > .elementor-widget-wrap > .elementor-element .golf-leaderboard-container {
+  margin-left: -30px !important;
+  margin-right: -30px !important;
+  width: calc(100% + 60px) !important;
+  max-width: calc(100% + 60px) !important;
 }
 .golf-leaderboard-list,
 .leaderboard-list {
-  width: 100%;
+  width: 100% !important;
   display: flex;
   flex-direction: column;
-  background-color: #f8f9fa;
-  padding: 0px;
-  margin: 0px;
+  background-color: transparent;
+  padding: 0 !important;
+  margin: 0 !important;
   flex: 1;
   overflow-y: auto;
   min-height: 0;
+  /* Fallback: allow capping height via CSS var if JS is unavailable */
+  max-height: var(--leaderboard-max-height, none);
+  overflow-x: hidden; /* avoid horizontal scrollbar inside Elementor columns */
+  box-sizing: border-box !important;
+  gap: clamp(8px, 1.2vw, 12px) !important; /* Espacio entre tarjetas */
 }
 .golf-leaderboard-card,
 .leaderboard-card {
   background-color: white;
-  padding: 8px 10px;
-  width: 100%;
-  margin: 0;
+  padding: 10px 12px !important;
+  width: 100% !important;
+  margin: 0 0 clamp(6px, 1vw, 10px) 0 !important;
   display: flex;
-  gap: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
+  gap: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
   position: relative;
   min-height: 60px;
   flex-shrink: 0;
+  min-width: 0; /* allow children to shrink within narrow columns */
+  overflow: hidden; /* prevent inner overflow causing horizontal scroll */
+  box-sizing: border-box !important;
+  transition: all 0.2s ease;
 }
 .golf-leaderboard-card:hover,
 .leaderboard-card:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
 }
 .card-content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: clamp(8px, 2vw, 32px);
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: clamp(4px, 1vw, 8px) !important;
   background: #fff;
   border-radius: 12px;
-  padding: clamp(8px, 2vw, 24px) clamp(12px, 4vw, 48px);
+  padding: 0 !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  width: 100%;
+  width: 100% !important;
+  min-width: 0; /* critical for text ellipsis in constrained containers */
+  box-sizing: border-box !important;
+  margin: 0 !important;
 }
 .leaderboard-img,
 .name {
@@ -185,33 +293,44 @@ main {
   font-weight: bold;
   font-size: clamp(1em, 2vw, 1.15em);
   text-align: center;
-  margin: 0;
-  min-width: clamp(36px, 7vw, 70px);
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: clamp(28px, 5vw, 45px);
+  max-width: clamp(28px, 5vw, 45px);
   color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 .leaderboard-img,
 .avatar-initials {
   order: 2;
-  width: clamp(28px, 6vw, 48px);
-  height: clamp(28px, 6vw, 48px);
+  width: clamp(32px, 6.5vw, 46px);
+  height: clamp(32px, 6.5vw, 46px);
   border-radius: 50%;
   object-fit: cover;
-  display: block;
-  margin: 0 clamp(4px, 2vw, 16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 !important;
+  flex-shrink: 0;
 }
 .name {
   order: 3;
   font-weight: 600;
   font-size: clamp(0.95em, 2vw, 1.12em);
-  margin-bottom: 0;
+  margin: 0 clamp(4px, 0.8vw, 8px) 0 0 !important;
+  padding: 0 !important;
   text-transform: uppercase;
   color: #333;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: clamp(60px, 15vw, 120px);
-  max-width: clamp(100px, 25vw, 220px);
-  display: block;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
 }
 .score,
 .score.negative,
@@ -221,9 +340,15 @@ main {
   font-weight: bold;
   font-size: clamp(1em, 2vw, 1.12em);
   text-align: center;
-  min-width: clamp(40px, 8vw, 80px);
+  min-width: clamp(38px, 7vw, 55px);
+  max-width: clamp(38px, 7vw, 55px);
   color: #e74c3c;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex-shrink: 0;
 }
 .score.positive {
   color: #27ae60;
@@ -237,8 +362,14 @@ main {
   color: #888;
   font-size: clamp(0.95em, 2vw, 1.08em);
   text-align: center;
-  min-width: clamp(40px, 10vw, 100px);
-  display: block;
+  min-width: clamp(48px, 9vw, 75px);
+  max-width: clamp(48px, 9vw, 75px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex-shrink: 0;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -281,52 +412,60 @@ main {
 
 @media (max-width: 450px) {
   .card-content {
-    display: grid !important;
-    grid-template-areas:
-      "pos img name name name"
-      "pos img score thru .";
-    column-gap: 8px;
-    row-gap: 4px;
-    justify-items: start;
-    align-items: center;
-    padding: 8px 8px;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: clamp(2px, 0.5vw, 4px) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .golf-leaderboard-card {
+    padding: 4px 6px !important;
   }
   .position-box {
-    grid-area: pos;
+    min-width: clamp(20px, 4vw, 30px) !important;
+    max-width: clamp(20px, 4vw, 30px) !important;
+    font-size: clamp(0.85em, 1.5vw, 0.95em) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    order: 1;
   }
   .leaderboard-img,
   .avatar-initials {
-    grid-area: img;
-    width: 80px;
-    height: 80px;
-    margin: 0 4px;
+    width: clamp(24px, 5vw, 32px) !important;
+    height: clamp(24px, 5vw, 32px) !important;
+    margin: 0 !important;
+    order: 2;
   }
   .name {
-    grid-area: name;
+    flex: 0 1 auto !important;
     min-width: 0 !important;
-    max-width: 100% !important;
-    margin: 0;
-    font-size: 0.95em;
+    max-width: none !important;
+    margin: 0 clamp(2px, 0.5vw, 4px) 0 0 !important;
+    font-size: clamp(0.8em, 1.8vw, 0.95em) !important;
+    padding: 0 !important;
+    order: 3;
   }
   .score,
   .score.negative,
   .score.positive,
   .score.even {
-    grid-area: score;
-    justify-self: start !important;
-    min-width: 0 !important;
-    margin: 0;
-    font-size: 0.95em;
+    min-width: clamp(28px, 6vw, 40px) !important;
+    max-width: clamp(28px, 6vw, 40px) !important;
+    font-size: clamp(0.85em, 1.8vw, 0.95em) !important;
+    margin: 0 clamp(2px, 0.5vw, 4px) 0 0 !important;
+    padding: 0 !important;
+    order: 4;
   }
   .thru,
   .thru-text {
-    grid-area: thru;
-    justify-self: start !important;
-    text-align: left !important;
-    white-space: nowrap;
-    min-width: 0 !important;
-    margin: 0;
-    font-size: 0.95em;
+    min-width: clamp(35px, 8vw, 55px) !important;
+    max-width: clamp(35px, 8vw, 55px) !important;
+    font-size: clamp(0.8em, 1.6vw, 0.9em) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    order: 5;
   }
 }
 @media (min-width: 451px) and (max-width: 600px) {
@@ -335,25 +474,32 @@ main {
 }
 @media (min-width: 601px) and (max-width: 900px) {
   .card-content {
-    gap: 14px;
-    padding: 12px 20px;
-    width: 100%;
+    gap: 6px !important;
+    padding: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .golf-leaderboard-card {
+    padding: 4px 6px !important;
   }
   .position-box {
     min-width: 50px;
     font-size: 1.08em;
+    margin: 0 3px !important;
+    padding: 0 2px !important;
   }
   .leaderboard-img,
   .avatar-initials {
     width: 60px;
     height: 60px;
-    margin: 0 8px;
+    margin: 0 4px !important;
   }
   .name {
     min-width: 90px;
     max-width: 120px;
     font-size: 1.05em;
-    margin: 0 8px;
+    margin: 0 4px !important;
+    padding: 0 2px !important;
   }
   .score,
   .score.negative,
@@ -362,37 +508,46 @@ main {
     min-width: 50px;
     max-width: 70px;
     font-size: 1.05em;
-    margin: 0 8px;
+    margin: 0 4px !important;
+    padding: 0 2px !important;
   }
   .thru,
   .thru-text {
     min-width: 60px;
     max-width: 90px;
     font-size: 1.05em;
-    margin: 0 8px;
+    margin: 0 4px !important;
+    padding: 0 2px !important;
   }
 }
 @media (min-width: 901px) {
   .card-content {
-    gap: 18px;
-    padding: 14px 28px;
-    width: 100%;
+    gap: 8px !important;
+    padding: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .golf-leaderboard-card {
+    padding: 4px 8px !important;
   }
   .position-box {
     min-width: 70px;
     font-size: 1.1em;
+    margin: 0 4px !important;
+    padding: 0 2px !important;
   }
   .leaderboard-img,
   .avatar-initials {
     width: 80px;
     height: 80px;
-    margin: 0 10px;
+    margin: 0 6px !important;
   }
   .name {
     min-width: 110px;
     max-width: 140px;
     font-size: 1.08em;
-    margin: 0 10px;
+    margin: 0 6px !important;
+    padding: 0 2px !important;
   }
   .score,
   .score.negative,
@@ -401,14 +556,16 @@ main {
     min-width: 60px;
     max-width: 80px;
     font-size: 1.08em;
-    margin: 0 10px;
+    margin: 0 6px !important;
+    padding: 0 2px !important;
   }
   .thru,
   .thru-text {
     min-width: 80px;
     max-width: 100px;
     font-size: 1.08em;
-    margin: 0 10px;
+    margin: 0 6px !important;
+    padding: 0 2px !important;
   }
 }
 
@@ -436,7 +593,7 @@ main {
 }
 
 /* ===== SNACKBAR ===== */
-#snackbar {
+.golf-snackbar {
   visibility: hidden;
   min-width: 280px;
   background-color: #333;
@@ -444,7 +601,7 @@ main {
   text-align: center;
   padding: 12px 16px;
   border-radius: 6px;
-  position: fixed;
+  position: absolute;
   left: 50%;
   bottom: 30px;
   transform: translateX(-50%);
@@ -453,8 +610,98 @@ main {
   transition: opacity 0.5s ease, bottom 0.5s ease;
   font-size: 14px;
 }
-#snackbar.show {
+.golf-snackbar.show {
   visibility: visible;
   opacity: 1;
   bottom: 50px;
 }
+
+/* Ensure the container is positioned relative for absolute snackbar */
+.golf-leaderboard-container {
+  position: relative;
+}
+
+/* ===== CONTAINER-QUERY ADAPTATION (Elementor columns) ===== */
+/* The parent container now has container-type: inline-size; container-name: leaderboard; */
+
+/* Narrow columns: stack name/score, shrink avatars, remove fixed min-widths that caused overflow */
+@container leaderboard (max-width: 480px) {
+  .card-content {
+    display: grid !important;
+    grid-template-areas:
+      "pos img name name name"
+      "pos img score thru .";
+    column-gap: 4px !important;
+    row-gap: 3px !important;
+    justify-items: start;
+    align-items: center;
+    padding: 0 !important;
+    gap: 4px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .golf-leaderboard-card {
+    padding: 4px !important;
+  }
+  .position-box { grid-area: pos; min-width: clamp(24px, 10cqw, 48px); font-size: 0.95em; margin: 0 !important; padding: 0 2px !important; }
+  .leaderboard-img,
+  .avatar-initials { grid-area: img; width: 56px; height: 56px; margin: 0 2px !important; }
+  .name { grid-area: name; min-width: 0 !important; max-width: 100% !important; margin: 0 !important; font-size: 0.95em; padding: 0 2px !important; }
+  .score,
+  .score.negative,
+  .score.positive,
+  .score.even { grid-area: score; justify-self: start !important; min-width: 0 !important; margin: 0 !important; font-size: 0.95em; padding: 0 2px !important; }
+  .thru,
+  .thru-text { grid-area: thru; justify-self: start !important; text-align: left !important; white-space: nowrap; min-width: 0 !important; margin: 0 !important; font-size: 0.95em; padding: 0 2px !important; }
+}
+
+/* Medium columns: tighten spacing and size using container width units */
+@container leaderboard (min-width: 481px) and (max-width: 800px) {
+  .card-content { 
+    gap: clamp(6px, 2cqw, 10px) !important; 
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .golf-leaderboard-card {
+    padding: 4px 6px !important;
+  }
+  .position-box { min-width: clamp(36px, 12cqw, 60px); font-size: 1.05em; margin: 0 3px !important; padding: 0 2px !important; }
+  .leaderboard-img,
+  .avatar-initials { width: clamp(40px, 12cqw, 64px); height: clamp(40px, 12cqw, 64px); margin: 0 3px !important; }
+  .name { min-width: clamp(80px, 25cqw, 160px); max-width: clamp(120px, 40cqw, 240px); font-size: 1.02em; margin: 0 3px !important; padding: 0 2px !important; }
+  .score,
+  .score.negative,
+  .score.positive,
+  .score.even { min-width: clamp(40px, 12cqw, 70px); font-size: 1.02em; margin: 0 3px !important; padding: 0 2px !important; }
+  .thru,
+  .thru-text { min-width: clamp(50px, 14cqw, 90px); font-size: 1.02em; margin: 0 3px !important; padding: 0 2px !important; }
+}
+
+/* Wide columns: keep generous spacing, but still base some sizes on the container */
+@container leaderboard (min-width: 801px) {
+  .card-content { 
+    gap: clamp(8px, 2cqw, 14px) !important; 
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .golf-leaderboard-card {
+    padding: 4px 8px !important;
+  }
+  .position-box { min-width: clamp(50px, 10cqw, 70px); margin: 0 4px !important; padding: 0 2px !important; }
+  .leaderboard-img,
+  .avatar-initials { width: clamp(56px, 8cqw, 80px); height: clamp(56px, 8cqw, 80px); margin: 0 4px !important; }
+  .name { min-width: clamp(100px, 20cqw, 180px); max-width: clamp(140px, 35cqw, 280px); margin: 0 4px !important; padding: 0 2px !important; }
+  .score,
+  .score.negative,
+  .score.positive,
+  .score.even { min-width: clamp(56px, 10cqw, 80px); margin: 0 4px !important; padding: 0 2px !important; }
+  .thru,
+  .thru-text { min-width: clamp(70px, 12cqw, 100px); margin: 0 4px !important; padding: 0 2px !important; }
+}
+
+/* Cache bust: 2025-10-15 16:17:09 */

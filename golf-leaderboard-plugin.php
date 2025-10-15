@@ -277,8 +277,15 @@ class GolfLeaderboardPlugin {
     }
     
     public function enqueue_frontend_scripts() {
-        wp_enqueue_script('golf-leaderboard-js', GOLF_LEADERBOARD_PLUGIN_URL . 'assets/frontend.js', ['jquery'], '1.0.0', true);
-        wp_enqueue_style('golf-leaderboard-css', GOLF_LEADERBOARD_PLUGIN_URL . 'assets/frontend.css', [], '1.0.0');
+        // Dynamic versioning based on file modification time
+        $css_file = GOLF_LEADERBOARD_PLUGIN_PATH . 'assets/frontend.css';
+        $js_file = GOLF_LEADERBOARD_PLUGIN_PATH . 'assets/frontend.js';
+        
+        $css_version = file_exists($css_file) ? filemtime($css_file) : '1.0.0';
+        $js_version = file_exists($js_file) ? filemtime($js_file) : '1.0.0';
+        
+        wp_enqueue_script('golf-leaderboard-js', GOLF_LEADERBOARD_PLUGIN_URL . 'assets/frontend.js', ['jquery'], $js_version, true);
+        wp_enqueue_style('golf-leaderboard-css', GOLF_LEADERBOARD_PLUGIN_URL . 'assets/frontend.css', [], $css_version);
         
         wp_localize_script('golf-leaderboard-js', 'golfLeaderboard', [
             'ajax_url' => admin_url('admin-ajax.php'),
